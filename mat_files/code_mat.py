@@ -15,13 +15,16 @@ def code_xored_file(filename):
             # Wykonujemy operację XOR na zawartości używając sumy kontrolnej
             coded_content = bytes([b ^ checksum for b in content])
             
+            # Tworzymy nową zawartość z checksumem jako pierwszym bajtem
+            final_content = bytes([checksum]) + coded_content
+            
             # Zapisujemy zakodowane dane do nowego pliku
             output_filename = filename.replace('_xored.dat', '_coded.dat')
             with open(output_filename, 'wb') as out_file:
-                out_file.write(coded_content)
+                out_file.write(final_content)
             print(f"Zapisano odkodowane dane do: {output_filename}")
             
-            return coded_content
+            return final_content
             
     except FileNotFoundError:
         print(f"Nie znaleziono pliku: {filename}")
